@@ -1,10 +1,10 @@
 function myFunction() {
     let libroPruebitas = SpreadsheetApp.getActiveSpreadsheet();
-    let tasaAccidentes = libroPruebitas.getSheetByName("Copia de TASAACC");
+    let tasaAccidentes = libroPruebitas.getSheetByName("AprendiendoQuery");
   
     let columnasMeses=['P', 'Z'];//Desde segundo Año de datos hasta el ultimo Z + shift
     let primerMesDato='C';//Primer Mes del primer Año de datos
-    let filasTramosTasas=[[59,86], [137,160], [209,231]];
+    let filasTramosTasas=[[50,72], [122,145], [207,236]];
   
     let indexColumna=columnasMeses[0].charCodeAt(0);
     let indexFinal=1+columnasMeses[1].charCodeAt(0);//Shift + Z
@@ -35,7 +35,7 @@ function myFunction() {
           if(z==filasTramoTasa[1]){
             value=`=IF(COUNTBLANK(${rangeColumnaInicio})<${parseInt((1/3)*(2*delta))};IFERROR((SUM(${doceMesesIndicador})*100)/AVERAGE(${doceMesesHead}); "SD");)`;
           }
-          let posicionTasa=`${columnaInicio}${filasTramoTasa[0]+contador}`;
+          let posicionTasa=`${columnaInicio}${filasTramoTasa[0]+contador}`
           tasaAccidentes.getRange(posicionTasa).setValue(value);
         }
         contador+=1;
