@@ -146,7 +146,7 @@ function test() {
     libro.setNamedRange('asRangoExport', sheet.getRange(celdaEscrituraExport));
     
 
-
+    
     //----------------------------------Arreglar Vlook--------------------------------------
     FilaPrimerIndicador=5
     FilaUltimoInidicador=39
@@ -154,15 +154,14 @@ function test() {
     ColumaAA="U"
     ColumnaPPTO="W"
     ColumnaYTD="Y"
-
-    for (let index = FilaPrimerIndicador; index <= FilaUltimoInidicador; index++) {
-        formulaAA=sheet.getRange(ColumaAA+`${index}`).getFormula()
-        sheet.getRange(ColumaAA+`${index}`).setValue(formulaAA.replaceAll("$D$244:$P$278", "{asRangoIndicadores\\asRangoAcumAA}").replaceAll("$D$285:$E$296", "asRangoNumMes"))
-
-        formulaPPTO=sheet.getRange(ColumnaPPTO+`${index}`).getFormula()
-        sheet.getRange(ColumnaPPTO+`${index}`).setValue(formulaPPTO.replaceAll("$D$174:$P$208","{asRangoIndicadores\\asRangoAcumPPTO}").replaceAll("$D$285:$E$296", "asRangoNumMes"))  
-
-        formulaYTD=sheet.getRange(ColumnaYTD+`${index}`).getFormula()
-        sheet.getRange(ColumnaYTD+`${index}`).setValue(formulaYTD.replaceAll("$D$104:$P$138", "{asRangoIndicadores\\asRangoAcum}").replaceAll("$D$285:$E$296", "asRangoNumMes"))    
+    let RangeFormulas=sheet.getRange(ColumaAA+`${FilaPrimerIndicador}`+":"+ColumnaYTD+`${FilaUltimoInidicador}`)
+    let Formulas=RangeFormulas.getFormulas()
+    //Recorremos las celda, remplazando los rangos estaticos por los rangos con nombre
+    for (let i=0; i<Formulas.length; i++){
+      for (let z=0; z<Formulas[i].length; z++){
+        Formulas[i][z]=Formulas[i][z].replaceAll("$D$244:$P$278", "{asRangoIndicadores\\asRangoAcumAA}").replaceAll("$D$174:$P$208","{asRangoIndicadores\\asRangoAcumPPTO}").replaceAll("$D$104:$P$138", "{asRangoIndicadores\\asRangoAcum}").replaceAll("$D$285:$E$296", "asRangoNumMes")
+      }
     }
+
+    RangeFormulas.setFormulas(Formulas);
 }
