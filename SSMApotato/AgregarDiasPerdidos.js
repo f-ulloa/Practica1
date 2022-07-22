@@ -64,6 +64,7 @@ function agregarIndicadores(){
    
    
     //Arreglamos la formula del estado del mes
+    console.log("Hola Desarrollo")
     
     
  /*
