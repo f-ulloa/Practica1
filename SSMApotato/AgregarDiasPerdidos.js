@@ -32,9 +32,11 @@ function agregarIndicadores(){
 
     
     //Le damos nombre y Type text a los nuevos indicadores
-    let KPI = sheet.getRange(13,3).getValues()
-    sheet.getRange(14,3).setValues(KPI);
-    sheet.getRange(15,3).setValues(KPI);
+    sheet.getRange("B14").setValue("1.8");
+    sheet.getRange("B15").setValue("1.9");
+    let KPI = sheet.getRange("C13").getValue();
+    sheet.getRange("C14").setValue(KPI);
+    sheet.getRange("C15").setValue(KPI);
     sheet.getRange("D14").setValue("Días perdidos Int.")
     sheet.getRange("E14").setValue("#Días perdidos (Int.)")
     sheet.getRange("D15").setValue("Días perdidos Ext.")
@@ -56,15 +58,15 @@ function agregarIndicadores(){
     sheet.getRange(14,7,1,lastColumn).setFormulas([Formulas14])
     sheet.getRange(15,7,1,lastColumn).setFormulas([Formulas15])
 
-
-
-
-
     //Arreglamos la enumeracion de los indicadores
-   
-   
-    //Arreglamos la formula del estado del mes
-    console.log("Hola Desarrollo")
+    let RangoCodIndicadores=sheet.getRange("B16:B21")
+    let CodIndicadores=RangoCodIndicadores.getValues()
+    let unidad="1";
+    let contadorSecundario=10; 
+    for (let i=0; i<CodIndicadores.length; i++){
+      CodIndicadores[i]=[unidad+`.${contadorSecundario++}`];
+    } 
+    RangoCodIndicadores.setValues(CodIndicadores);
     
     
  /*

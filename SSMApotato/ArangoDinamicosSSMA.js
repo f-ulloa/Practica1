@@ -49,7 +49,14 @@ function test() {
     libro.setNamedRange('asRangoAcum', rangoAcum);
     libro.setNamedRange('asRangoAcumPPTO', rangoAcumPPTO);
     libro.setNamedRange('asRangoAcumAA', rangoAcumAA);
-    libro.setNamedRange('asRangoNumMes', sheet.getRange("D285:E296"));
+
+
+    //Corremos de lugar la tabla de Rango mes, ya que la tabla export al crecer hacia abajo, se toparan
+    let TablaNumMes=sheet.getRange("D285:E296").getValues();
+    sheet.getRange("D285:E296").clear();
+    sheet.getRange("Y70:Z81").clear()
+    sheet.getRange("Y70:Z81").setValues(TablaNumMes);
+    libro.setNamedRange('asRangoNumMes', sheet.getRange("Y70:Z81"));
 
     
 
