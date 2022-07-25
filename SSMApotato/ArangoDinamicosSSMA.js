@@ -1,12 +1,10 @@
-function test() {
+function ArangoDinamicosSSMA(parNombreURL) {
     /*
     Para utilizar este script se debe modificar:
     M1.-Los rango de los DATOS por periodo Tiempo ((AR5:BC39)->Real, (BP5:CA39)->RealAA, etc)
     M2.-Celdas de escrituras, para generar el rango dinamico a exportar
     M3.-Las celdas con el Nombre del Tramo (Ej: AR3->Real ; BD3->PPTO, etc)
-    */
 
-    /*
     Los pasos de este Script son:
      1.-Definir los rango de los tramos de datos y asociarlos a un rango con nombre
      2.- Definir las celdas donde se escribiran los campos de la tabla de exportacion
@@ -15,12 +13,16 @@ function test() {
      5.- Cambiar las formulas de SSMA, para que trabajen con los rangos con nombre
     */
 
+    let URLL=parNombreURL.URLcopia
+    let nombrePlanta=parNombreURL.NombrePlanta
 
-    let libro = SpreadsheetApp.getActiveSpreadsheet();
-    nombreSheet="Antofagasta de SSMA"
+    let libro = SpreadsheetApp.openByUrl(URLL)
+    let nombreSheet="SSMA"
+    
+    
     let sheet = libro.getSheetByName(nombreSheet);
     //Eliminar los elementos y formato de la tabla de exportacion anterior.
-    libro.getRange("B68:P278").clear()
+    sheet.getRange("B68:P278").clear()
 
     //---------------------- 1.-Definir los rango de los tramos de datos y asociarlos a un rango con nombre ----------------------------
     //###### M1 #####
@@ -79,7 +81,7 @@ function test() {
 
     //----------------------------- 3.- Escribir las formulas para cada columna de la tabla de exportacion -----------------------------
     sheet.getRange(celdaEscrituraEncabezados).setFormula('TRANSPOSE(ARRAYFORMULA({"Planta";"BUSCADOR";"AÑO";"Tipo";"Indicador";"Ene";"Feb";"Mar";"Abr";"Mayo";"Jun";"Jul";"Ago";"Sept";"Oct";"Nov";"Dic";"Buscador2"}))')
-    sheet.getRange(celdaEscrituraPlanta).setFormula(`ARRAYFORMULA("Antofagasta"&T(SEQUENCE(COUNTA(asRangoIndicadores)*6;1)))`)
+    sheet.getRange(celdaEscrituraPlanta).setFormula(`ARRAYFORMULA("${nombrePlanta}"&T(SEQUENCE(COUNTA(asRangoIndicadores)*6;1)))`)
     sheet.getRange(celdaEscituraBuscador).setFormula(`ARRAYFORMULA(
         CONCAT(
                 CONCAT(
@@ -113,20 +115,20 @@ function test() {
                                     ${Ce[5]}&T(SEQUENCE(COUNTA(asRangoIndicadores);1))})
                             `)
     sheet.getRange(celdaEscrituraIndicador).setFormula(`{
-                                IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoIndicadores");
-                                IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoIndicadores");
-                                IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoIndicadores");
-                                IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoIndicadores");
-                                IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoIndicadores");
-                                IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoIndicadores")
+                                IMPORTRANGE("${URLL}";"asRangoIndicadores");
+                                IMPORTRANGE("${URLL}";"asRangoIndicadores");
+                                IMPORTRANGE("${URLL}";"asRangoIndicadores");
+                                IMPORTRANGE("${URLL}";"asRangoIndicadores");
+                                IMPORTRANGE("${URLL}";"asRangoIndicadores");
+                                IMPORTRANGE("${URLL}";"asRangoIndicadores")
                             }`)
     sheet.getRange(celdaEscrituraImportRange).setFormula(`{
-                                            IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoReal");
-                                            IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoPPTO");
-                                            IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoRealAA");
-                                            IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoAcum");
-                                            IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoAcumPPTO");
-                                            IMPORTRANGE("1VAlrmViS9S5n5y6mCE8bhI8tkK03kxa0At_c7x1jkuc";"asRangoAcumAA")
+                                            IMPORTRANGE("${URLL}";"asRangoReal");
+                                            IMPORTRANGE("${URLL}";"asRangoPPTO");
+                                            IMPORTRANGE("${URLL}";"asRangoRealAA");
+                                            IMPORTRANGE("${URLL}";"asRangoAcum");
+                                            IMPORTRANGE("${URLL}";"asRangoAcumPPTO");
+                                            IMPORTRANGE("${URLL}";"asRangoAcumAA")
                                         }`)
     sheet.getRange(celdaEscrituraBuscador2).setFormula(`ARRAYFORMULA(
         CONCAT(

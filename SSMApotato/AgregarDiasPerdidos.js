@@ -1,4 +1,4 @@
-function agregarIndicadores(){
+function AgregarIndicadores(parNombreURL){
     /*
     Dado que los indicadore a agregar, son de la misma naturaleza que el indicador presente en SSMA, Dias Perdidos, los pasos seran los siguientes:
 
@@ -7,12 +7,11 @@ function agregarIndicadores(){
     3.- Arreglar la enumeracion de los indicadores del paso donde se agregaron los indicadores
     4.- Se le da un Nombre y el type en texto a los nuevos indicadores
     */
-    
-    let libro = SpreadsheetApp.getActiveSpreadsheet();
-    nombreSheet="Antofagasta de SSMA"
+    let URLL=parNombreURL.URLcopia
+    let libro = SpreadsheetApp.openByUrl(URLL)
+    let nombreSheet="SSMA"
     let sheet = libro.getSheetByName(nombreSheet);
 
-  
     //------------------------------------------- 1.- Agregamos las 2 nuevas Filas-------------------------------
     sheet.insertRowAfter(13);
     sheet.insertRowAfter(13);
